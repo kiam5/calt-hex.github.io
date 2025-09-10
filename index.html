@@ -1,374 +1,234 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro Apple Conversor</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #d1d5db; /* Gray background */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
-            color: #1f2937;
-        }
-        .calculator {
-            background-color: #c0c0c0;
-            border: 2px solid #808080;
-            border-radius: 12px;
-            box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.2);
-            padding: 1.5rem;
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        .display-container {
-            background-color: #ffffff;
-            border: 2px solid #808080;
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-        }
-        .display {
-            font-size: 2.5rem;
-            text-align: right;
-            background: none;
-            border: none;
-            outline: none;
-            width: 100%;
-            color: #1f2937;
-        }
-        .conversions-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-        .conversion-row {
-            display: grid;
-            grid-template-columns: 1fr 3fr auto;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .conversion-label {
-            font-weight: bold;
-            font-size: 0.875rem;
-            text-align: right;
-            padding-right: 0.5rem;
-        }
-        .conversion-input {
-            background-color: #ffffff;
-            border: 1px solid #a0a0a0;
-            border-radius: 4px;
-            padding: 0.5rem 0.75rem;
-            font-size: 1rem;
-            width: 100%;
-            cursor: default;
-        }
-        .copy-button {
-            background-color: #e0e0e0;
-            border: 1px solid #a0a0a0;
-            border-radius: 4px;
-            padding: 0.5rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.1s ease;
-        }
-        .copy-button:hover {
-            background-color: #d0d0d0;
-        }
-        .copy-button:active {
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-        }
-        .keypad {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.75rem; /* Reduced gap */
-        }
-        .button {
-            background-color: #e0e0e0;
-            border: 2px solid #a0a0a0;
-            border-radius: 8px;
-            padding: 1rem 0; /* Reduced padding */
-            font-size: 1.25rem; /* Reduced font size */
-            font-weight: bold;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.1s ease;
-            user-select: none;
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
-        }
-        .button:hover {
-            background-color: #d0d0d0;
-        }
-        .button:active {
-            transform: translate(2px, 2px);
-            box-shadow: none;
-        }
-        .button-span-2 {
-            grid-column: span 2;
-        }
-        .button-special {
-            background-color: #ffbd2e; /* yellow */
-            border-color: #a08020;
-        }
-        .button-special-green {
-            background-color: #27c93f; /* green */
-            border-color: #1a8b2c;
-        }
-        .button-special-red {
-            background-color: #ff5f56; /* red */
-            border-color: #a63f3a;
-        }
-        .button.disabled {
-            background-color: #e0e0e0;
-            border-color: #a0a0a0;
-            color: #d1d5db;
-            cursor: not-allowed;
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
-            transform: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Apple Conversor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #d1d5db;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+      color: #1f2937;
+      transition: background 0.3s, color 0.3s;
+    }
+    .calculator {
+      background: #c0c0c0;
+      border: 2px solid #808080;
+      border-radius: 12px;
+      box-shadow: 8px 8px 0 rgba(0,0,0,0.2);
+      padding: 1.5rem;
+      max-width: 400px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+    }
+    .display-container, .conversion-input, .copy-button, .button {
+      transition: background 0.3s, border 0.3s, color 0.3s;
+    }
+    .display-container {
+      background: #fff;
+      border: 2px solid #808080;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+    }
+    .display {
+      font-size: 2.5rem;
+      text-align: right;
+      background: none;
+      border: none;
+      outline: none;
+      width: 100%;
+      color: inherit;
+    }
+    .conversion-row {
+      display: grid;
+      grid-template-columns: 1fr 3fr auto;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .conversion-label {
+      font-weight: bold;
+      font-size: 0.875rem;
+      text-align: right;
+      padding-right: 0.5rem;
+    }
+    .conversion-input {
+      background: #fff;
+      border: 1px solid #a0a0a0;
+      border-radius: 4px;
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 100%;
+      cursor: default;
+    }
+    .copy-button, .button {
+      cursor: pointer;
+      border-radius: 8px;
+      font-weight: bold;
+      user-select: none;
+    }
+    .copy-button, .button {
+      background: #e0e0e0;
+      border: 1px solid #a0a0a0;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+    }
+    .copy-button:hover, .button:hover { background: #d0d0d0; }
+    .button:active { transform: translate(2px,2px); box-shadow: none; }
+    .button { font-size: 1.25rem; padding: 1rem 0; text-align: center; }
+    .button.disabled { color: #d1d5db; cursor: not-allowed; }
+    .button-special { background: #ffbd2e; border-color: #a08020; }
+    .button-special-green { background: #27c93f; border-color: #1a8b2c; }
+    .button-special-red { background: #ff5f56; border-color: #a63f3a; }
+    .keypad { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.75rem; }
+
+    /* --- NUEVO BOTÓN ESTILO MACINTOSH 1984 --- */
+    .mode-toggle-button {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: #C0C0C0;
+      border: 2px solid black;
+      font-family: monospace;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 5px 30px;
+      box-shadow: 2px 2px 0px #808080;
+      transition: background-color 0.2s, box-shadow 0.2s;
+    }
+    .mode-toggle-button:active {
+      box-shadow: 0px 0px 0px #808080;
+      transform: translate(2px, 2px);
+    }
+    body.dark-mode .mode-toggle-button {
+      background-color: #202020;
+      border-color: #D8D8D8;
+      color: #D8D8D8;
+      box-shadow: 2px 2px 0px #404040;
+    }
+    body.dark-mode .mode-toggle-button:active {
+      box-shadow: 0px 0px 0px #404040;
+    }
+    .icon-symbol { font-size: 24px; }
+
+    /* --- Dark Mode del Conversor --- */
+    body.dark-mode { background-color: #1a202c; color: #e2e8f0; }
+    body.dark-mode .calculator { background-color: #2d3748; border-color: #4a5568; }
+    body.dark-mode .display-container { background-color: #4a5568; border-color: #6a7c8e; }
+    body.dark-mode .display { color: #e2e8f0; }
+    body.dark-mode .conversion-label { color: #cbd5e0; }
+    body.dark-mode .conversion-input { background-color: #4a5568; border-color: #6a7c8e; color: #e2e8f0; }
+    body.dark-mode .copy-button { background-color: #4a5568; border-color: #6a7c8e; color: #e2e8f0; }
+    body.dark-mode .copy-button:hover { background-color: #5b6b7d; }
+    body.dark-mode .button { background-color: #4a5568; border-color: #6a7c8e; color: #e2e8f0; }
+    body.dark-mode .button:hover { background-color: #5b6b7d; }
+    body.dark-mode .button.disabled { color: #9fa6b2; }
+    body.dark-mode .button-special { background: #ffbd2e; border-color: #a08020; color: #1f2937; }
+    body.dark-mode .button-special-green { background: #27c93f; border-color: #1a8b2c; color: #1f2937; }
+    body.dark-mode .button-special-red { background: #ff5f56; border-color: #a63f3a; color: #1f2937; }
+  </style>
 </head>
 <body>
-    <div class="calculator">
-        <div class="display-container">
-            <input type="text" id="display" class="display" value="0" readonly>
-        </div>
-        <div class="conversions-container">
-            <div class="conversion-row">
-                <span class="conversion-label">DEC</span>
-                <input type="text" id="dec" class="conversion-input" value="0" readonly>
-                <button class="copy-button" onclick="copyToClipboard('dec')">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                        <path fill-rule="evenodd" d="M11.906 1.5A3 3 0 0 0 9.006 0H7.25A3 3 0 0 0 4.25 3v13.5A3 3 0 0 0 7.25 19h7.5A3 3 0 0 0 17.25 16.5V6a3 3 0 0 0-3-3V1.5h-2.344ZM9.006 1.5h1.998V3h-1.998V1.5ZM5.75 3a1.5 1.5 0 0 1 1.5-1.5h.5V3a1.5 1.5 0 0 1-1.5 1.5h-.5V3ZM15.75 6a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H7.25a1.5 1.5 0 0 1-1.5-1.5V7.5a1.5 1.5 0 0 1 1.5-1.5h1.5v-1.5h-1.5a3 3 0 0 0-3 3v9A3 3 0 0 0 7.25 21h7.5A3 3 0 0 0 17.25 18V7.5A3 3 0 0 0 14.25 4.5h-1.5V6h1.5Z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
-            <div class="conversion-row">
-                <span class="conversion-label">BIN</span>
-                <input type="text" id="bin" class="conversion-input" value="0" readonly>
-                <button class="copy-button" onclick="copyToClipboard('bin')">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                        <path fill-rule="evenodd" d="M11.906 1.5A3 3 0 0 0 9.006 0H7.25A3 3 0 0 0 4.25 3v13.5A3 3 0 0 0 7.25 19h7.5A3 3 0 0 0 17.25 16.5V6a3 3 0 0 0-3-3V1.5h-2.344ZM9.006 1.5h1.998V3h-1.998V1.5ZM5.75 3a1.5 1.5 0 0 1 1.5-1.5h.5V3a1.5 1.5 0 0 1-1.5 1.5h-.5V3ZM15.75 6a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H7.25a1.5 1.5 0 0 1-1.5-1.5V7.5a1.5 1.5 0 0 1 1.5-1.5h1.5v-1.5h-1.5a3 3 0 0 0-3 3v9A3 3 0 0 0 7.25 21h7.5A3 3 0 0 0 17.25 18V7.5A3 3 0 0 0 14.25 4.5h-1.5V6h1.5Z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
-            <div class="conversion-row">
-                <span class="conversion-label">HEX</span>
-                <input type="text" id="hex" class="conversion-input" value="0" readonly>
-                <button class="copy-button" onclick="copyToClipboard('hex')">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                        <path fill-rule="evenodd" d="M11.906 1.5A3 3 0 0 0 9.006 0H7.25A3 3 0 0 0 4.25 3v13.5A3 3 0 0 0 7.25 19h7.5A3 3 0 0 0 17.25 16.5V6a3 3 0 0 0-3-3V1.5h-2.344ZM9.006 1.5h1.998V3h-1.998V1.5ZM5.75 3a1.5 1.5 0 0 1 1.5-1.5h.5V3a1.5 1.5 0 0 1-1.5 1.5h-.5V3ZM15.75 6a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H7.25a1.5 1.5 0 0 1-1.5-1.5V7.5a1.5 1.5 0 0 1 1.5-1.5h1.5v-1.5h-1.5a3 3 0 0 0-3 3v9A3 3 0 0 0 7.25 21h7.5A3 3 0 0 0 17.25 18V7.5A3 3 0 0 0 14.25 4.5h-1.5V6h1.5Z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
-            <div class="conversion-row">
-                <span class="conversion-label">OCT</span>
-                <input type="text" id="oct" class="conversion-input" value="0" readonly>
-                <button class="copy-button" onclick="copyToClipboard('oct')">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-                        <path fill-rule="evenodd" d="M11.906 1.5A3 3 0 0 0 9.006 0H7.25A3 3 0 0 0 4.25 3v13.5A3 3 0 0 0 7.25 19h7.5A3 3 0 0 0 17.25 16.5V6a3 3 0 0 0-3-3V1.5h-2.344ZM9.006 1.5h1.998V3h-1.998V1.5ZM5.75 3a1.5 1.5 0 0 1 1.5-1.5h.5V3a1.5 1.5 0 0 1-1.5 1.5h-.5V3ZM15.75 6a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H7.25a1.5 1.5 0 0 1-1.5-1.5V7.5a1.5 1.5 0 0 1 1.5-1.5h1.5v-1.5h-1.5a3 3 0 0 0-3 3v9A3 3 0 0 0 7.25 21h7.5A3 3 0 0 0 17.25 18V7.5A3 3 0 0 0 14.25 4.5h-1.5V6h1.5Z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-        
-        <div class="keypad">
-            <button class="button" data-value="7">7</button>
-            <button class="button" data-value="8">8</button>
-            <button class="button" data-value="9">9</button>
-            <button class="button button-special" data-op="÷">÷</button>
-            <button class="button" data-value="4">4</button>
-            <button class="button" data-value="5">5</button>
-            <button class="button" data-value="6">6</button>
-            <button class="button button-special" data-op="x">x</button>
-            <button class="button" data-value="1">1</button>
-            <button class="button" data-value="2">2</button>
-            <button class="button" data-value="3">3</button>
-            <button class="button button-special" data-op="-">-</button>
-            <button class="button" data-value="A">A</button>
-            <button class="button" data-value="B">B</button>
-            <button class="button" data-value="C">C</button>
-            <button class="button button-special" data-op="+">+</button>
-            <button class="button" data-value="D">D</button>
-            <button class="button" data-value="E">E</button>
-            <button class="button" data-value="F">F</button>
-            <button class="button button-special button-special-green" data-value="=">=</button>
-            <button class="button" data-value="0">0</button>
-            <button class="button" data-value=".">.</button>
-            <button class="button" data-op="backspace">DEL</button>
-            <button class="button button-special button-special-red" data-op="clear">AC</button>
-        </div>
+  <!-- NUEVO BOTÓN MODO OSCURO -->
+  <button id="modeToggleButton" class="mode-toggle-button" aria-label="Cambiar modo de tema">
+    <span class="icon-symbol">☀️</span>
+  </button>
+
+  <div class="calculator">
+    <div class="display-container"><input type="text" id="display" class="display" value="0" readonly></div>
+    <div class="conversions-container">
+      <div class="conversion-row"><span class="conversion-label">DEC</span><input id="dec" class="conversion-input" value="0" readonly><button class="copy-button" onclick="copyToClipboard('dec')">📋</button></div>
+      <div class="conversion-row"><span class="conversion-label">BIN</span><input id="bin" class="conversion-input" value="0" readonly><button class="copy-button" onclick="copyToClipboard('bin')">📋</button></div>
+      <div class="conversion-row"><span class="conversion-label">HEX</span><input id="hex" class="conversion-input" value="0" readonly><button class="copy-button" onclick="copyToClipboard('hex')">📋</button></div>
+      <div class="conversion-row"><span class="conversion-label">OCT</span><input id="oct" class="conversion-input" value="0" readonly><button class="copy-button" onclick="copyToClipboard('oct')">📋</button></div>
     </div>
+    <div class="keypad">
+      <button class="button" data-value="7">7</button><button class="button" data-value="8">8</button><button class="button" data-value="9">9</button><button class="button button-special" data-op="÷">÷</button>
+      <button class="button" data-value="4">4</button><button class="button" data-value="5">5</button><button class="button" data-value="6">6</button><button class="button button-special" data-op="x">x</button>
+      <button class="button" data-value="1">1</button><button class="button" data-value="2">2</button><button class="button" data-value="3">3</button><button class="button button-special" data-op="-">-</button>
+      <button class="button" data-value="A">A</button><button class="button" data-value="B">B</button><button class="button" data-value="C">C</button><button class="button button-special" data-op="+">+</button>
+      <button class="button" data-value="D">D</button><button class="button" data-value="E">E</button><button class="button" data-value="F">F</button><button class="button button-special-green" data-op="=">=</button>
+      <button class="button" data-value="0">0</button><button class="button" data-value=".">.</button><button class="button" data-op="backspace">DEL</button><button class="button button-special-red" data-op="clear">AC</button>
+    </div>
+  </div>
 
-    <script>
-        const display = document.getElementById('display');
-        const decInput = document.getElementById('dec');
-        const binInput = document.getElementById('bin');
-        const hexInput = document.getElementById('hex');
-        const octInput = document.getElementById('oct');
-        const buttons = document.querySelectorAll('.button');
-        const letterButtons = ['A', 'B', 'C', 'D', 'E', 'F'];
+  <script>
+    const display = document.getElementById('display');
+    const inputs = { dec:10, bin:2, hex:16, oct:8 };
+    const buttons = document.querySelectorAll('.button');
+    let currentInput = '0', operator=null, prevValue=null, base=10;
+    const hexLetters = ['A','B','C','D','E','F'];
 
-        let currentInput = '0';
-        let operator = null;
-        let prevValue = null;
-        let base = 10; // Default base is decimal
-
-        // Function to update conversion outputs based on the current display value
-        function updateConversions() {
-            let decimalValue = 0;
-            if (currentInput.trim() === '' || currentInput === '.') {
-                decimalValue = 0;
-            } else {
-                decimalValue = parseInt(currentInput, base);
+    function updateConversions() {
+      const decimal = parseInt(currentInput, base) || 0;
+      for (let id in inputs) {
+        document.getElementById(id).value = isNaN(decimal) ? 'Error' : decimal.toString(inputs[id]).toUpperCase();
+      }
+    }
+    function copyToClipboard(id) {
+      navigator.clipboard.writeText(document.getElementById(id).value);
+    }
+    function updateButtonState() {
+      buttons.forEach(btn=>{
+        const v=btn.dataset.value;
+        if(!v) return;
+        btn.classList.remove('disabled');
+        if(base===2 && (/[2-9A-F.]/.test(v))) btn.classList.add('disabled');
+        if(base===8 && (/[89A-F.]/.test(v))) btn.classList.add('disabled');
+        if(base===10 && hexLetters.includes(v)) btn.classList.add('disabled');
+      });
+    }
+    buttons.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(btn.classList.contains('disabled')) return;
+        const v=btn.dataset.value, op=btn.dataset.op;
+        if(v){
+          currentInput=(currentInput==='0'||prevValue!==null)?v:currentInput+v;
+          prevValue=null;
+        }else if(op){
+          if(op==='clear'){ currentInput='0'; prevValue=null; operator=null; }
+          else if(op==='backspace'){ currentInput=currentInput.length>1?currentInput.slice(0,-1):'0'; }
+          else if(op==='='){
+            if(operator&&prevValue!==null){
+              const a=parseInt(prevValue,base), b=parseInt(currentInput,base);
+              if(isNaN(a)||isNaN(b)) return display.value='Error';
+              let r={'+':a+b,'-':a-b,'x':a*b,'÷':a/b}[operator];
+              currentInput=r.toString(base); operator=null; prevValue=null;
             }
+          }else{ prevValue=currentInput; operator=op; currentInput='0'; }
+        }
+        display.value=currentInput; updateConversions();
+      });
+    });
+    for(let id in inputs){ document.getElementById(id).addEventListener('click',()=>{ base=inputs[id]; updateButtonState(); }); }
 
-            if (isNaN(decimalValue)) {
-                decInput.value = 'Error';
-                binInput.value = 'Error';
-                hexInput.value = 'Error';
-                octInput.value = 'Error';
-                return;
-            }
-            
-            decInput.value = decimalValue.toString(10);
-            binInput.value = decimalValue.toString(2);
-            hexInput.value = decimalValue.toString(16).toUpperCase();
-            octInput.value = decimalValue.toString(8);
-        }
+    // --- NUEVA LÓGICA BOTÓN MACINTOSH ---
+    const modeToggleButton = document.getElementById('modeToggleButton');
+    const iconSymbol = modeToggleButton.querySelector('.icon-symbol');
+    let isDarkMode = false;
+    const sunSymbol = '☀️';
+    const moonSymbol = '🌑';
 
-        // Handle button clicks
-        buttons.forEach(button => {
-            button.addEventListener('click', () => {
-                const value = button.getAttribute('data-value');
-                const op = button.getAttribute('data-op');
-                if (button.classList.contains('disabled')) {
-                    return;
-                }
-                if (value) {
-                    if (currentInput === '0' || prevValue !== null) {
-                        currentInput = value;
-                    } else {
-                        currentInput += value;
-                    }
-                    display.value = currentInput;
-                    prevValue = null;
-                } else if (op) {
-                    if (op === 'clear') {
-                        currentInput = '0';
-                        prevValue = null;
-                        operator = null;
-                    } else if (op === 'backspace') {
-                        if (currentInput.length > 1) {
-                            currentInput = currentInput.slice(0, -1);
-                        } else {
-                            currentInput = '0';
-                        }
-                    } else if (op === '=') {
-                        if (operator && prevValue !== null) {
-                            let result;
-                            const decCurrent = parseInt(currentInput, base);
-                            const decPrev = parseInt(prevValue, base);
-                            if (isNaN(decCurrent) || isNaN(decPrev)) {
-                                display.value = 'Error';
-                                currentInput = '';
-                                return;
-                            }
-                            switch (operator) {
-                                case '+':
-                                    result = decPrev + decCurrent;
-                                    break;
-                                case '-':
-                                    result = decPrev - decCurrent;
-                                    break;
-                                case 'x':
-                                    result = decPrev * decCurrent;
-                                    break;
-                                case '÷':
-                                    result = decPrev / decCurrent;
-                                    break;
-                            }
-                            currentInput = result.toString(base);
-                            display.value = currentInput;
-                            prevValue = null;
-                            operator = null;
-                        }
-                    } else {
-                        prevValue = currentInput;
-                        operator = op;
-                        currentInput = '0'; // Clear for next input
-                    }
-                    display.value = currentInput;
-                }
-                updateConversions();
-            });
-        });
+    modeToggleButton.addEventListener('click', () => {
+      isDarkMode = !isDarkMode;
+      if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        iconSymbol.textContent = moonSymbol;
+      } else {
+        document.body.classList.remove('dark-mode');
+        iconSymbol.textContent = sunSymbol;
+      }
+    });
 
-        // Toggle button states based on base
-        function updateButtonState() {
-            buttons.forEach(button => {
-                const value = button.getAttribute('data-value');
-                if (value) {
-                    if (base === 10) {
-                        if (letterButtons.includes(value)) {
-                            button.classList.add('disabled');
-                        } else {
-                            button.classList.remove('disabled');
-                        }
-                    } else if (base === 2) {
-                        if (['2', '3', '4', '5', '6', '7', '8', '9', '.', ...letterButtons].includes(value)) {
-                            button.classList.add('disabled');
-                        } else {
-                            button.classList.remove('disabled');
-                        }
-                    } else if (base === 8) {
-                        if (['8', '9', '.', ...letterButtons].includes(value)) {
-                            button.classList.add('disabled');
-                        } else {
-                            button.classList.remove('disabled');
-                        }
-                    } else if (base === 16) {
-                        button.classList.remove('disabled');
-                    }
-                }
-            });
-        }
-        // Event listeners for conversion inputs to change base
-        decInput.addEventListener('click', () => { base = 10; updateButtonState(); });
-        binInput.addEventListener('click', () => { base = 2; updateButtonState(); });
-        hexInput.addEventListener('click', () => { base = 16; updateButtonState(); });
-        octInput.addEventListener('click', () => { base = 8; updateButtonState(); });
-        // Function to copy text to clipboard
-        function copyToClipboard(id) {
-            const input = document.getElementById(id);
-            if (input) {
-                input.select();
-                document.execCommand('copy');
-                // You could add a temporary message here to confirm copy
-            }
-        }
-        // Initial state
-        updateButtonState();
-        updateConversions();
-        // Custom alert function
-        function showMessage(message) {
-            const messageBox = document.createElement('div');
-            messageBox.classList.add('message-box');
-            messageBox.textContent = message;
-            document.body.appendChild(messageBox);
-            setTimeout(() => {
-                messageBox.remove();
-            }, 2000);
-        }
-    </script>
+    updateButtonState(); updateConversions();
+  </script>
 </body>
 </html>
